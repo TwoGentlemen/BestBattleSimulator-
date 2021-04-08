@@ -9,7 +9,6 @@ public class SpawnManager : MonoBehaviour
 
     public bool isOn = false;
     [SerializeField] public string tagSpawn {get;private set; } = "Ground"; //Тэг поверхности на которой можем ставить мобов
-    [SerializeField] private GameObject objectSpawn;
     [SerializeField] private GameObject objectNode;
     [SerializeField] private float shift = 0.01f;
     [SerializeField] private Units[] spawnMob;

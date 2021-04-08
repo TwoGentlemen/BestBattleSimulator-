@@ -7,7 +7,7 @@ public class NodeBuild : MonoBehaviour
     [SerializeField] private Color NoBuild = Color.red;
     [SerializeField] private Color YesBuild = Color.red;
 
-    public GameObject objectInNode = null;
+    [HideInInspector] public GameObject objectInNode = null;
 
     private Renderer renderer = null;
     

@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int startMoney = 100;
 
     [Space(5)]
-    [SerializeField] private TextMeshProUGUI textMoney;
+    [SerializeField] private Text textMoney;
     
     private int currentMoney = 0;
 

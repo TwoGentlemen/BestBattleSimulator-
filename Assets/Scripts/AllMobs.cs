@@ -64,7 +64,7 @@ public class AllMobs : MonoBehaviour
         if (!GameManager.instance.isPlay || target == null) {return; }
 
         Move();
-        ActivationAttack();
+        
     }
 
     virtual public void Death() //Поведение при смерти моба
@@ -107,30 +107,30 @@ public class AllMobs : MonoBehaviour
         if(buf == null) { Debug.LogError("Not AllMobs on taget obj!!!"); return;}
         buf.Damage(forceDamage);
     }
-    virtual public void ActivationAttack()
-    {      
-        if (agent.remainingDistance <= rangeAttack && agent.remainingDistance > 0)
-        {
-            animator.SetBool("attack", true);
-        }
-        else
-        {
-            animator.SetBool("attack", false);
-        }
-    }
     
     virtual public void Move()
     {
         if(target == null || agent == null) { Debug.LogError("No target or agent!!!"); return;}
 
-        
+        if (agent.remainingDistance <= rangeAttack && agent.remainingDistance > 0)
+        {
+            animator.SetBool("attack", true);
+            animator.SetBool("walk", false);
+        }
+        else
+        {
+            //move
+            animator.SetBool("attack", false);
+            animator.SetBool("walk", true);
+            agent.SetDestination(target.position);
+        }
+
         Vector3 dir = target.position - transform.position;
         //look 
         Quaternion look = Quaternion.LookRotation(dir);
         Vector3 rot = look.eulerAngles;
         transform.eulerAngles = new Vector3(0, rot.y, 0);
-        //move
-        agent.SetDestination(target.position);
+       
     }
 
     private void SetTargets()
