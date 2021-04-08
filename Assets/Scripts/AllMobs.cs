@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(BoxCollider))]
 public class AllMobs : MonoBehaviour
 {
     enum Team
@@ -24,9 +26,8 @@ public class AllMobs : MonoBehaviour
     [SerializeField] protected float rangeAttack = 3f;
     [SerializeField] protected float timeReload = 1f;
 
-    [Space(5)]
-    [Header("Animation controller")]
-    [SerializeField] protected Animator animator;
+    
+    [HideInInspector] protected Animator animator;
 
 
     protected Transform target = null;
@@ -34,16 +35,29 @@ public class AllMobs : MonoBehaviour
 
     private NavMeshAgent agent = null;
 
+  
+    private void AddComponent()
+    {
+        if (unit == null) { Debug.LogError("Not completed unit in mobs"); unit = new Units(); }
+
+        agent = GetComponent<NavMeshAgent>();
+        if(agent == null) { Debug.LogError("Not comleted agentNavMesh!!!"); throw new System.Exception();}
+
+        animator = GetComponentInChildren<Animator>();
+        if(animator == null) { Debug.LogError("Not comleted animator in children!!!"); throw new System.Exception();}
+    }
+
     private void Start()
     {
-        if(unit == null) { Debug.LogError("Not completed unit in mobs"); unit = new Units();}
 
+        AddComponent();
         StarAnimSettings();
+        
         tag = GameManager.instance.SetTagForMob((int)team); //Устанавливаем тэг мобу в зависимости от того за кого он играет
         GameManager.instance.startGameFite+= StartGame; //Подписываемся на событие начала боя
-        agent = GetComponent<NavMeshAgent>();
-
         SpawnManager.instance.isOn = true;
+
+        rangeAttack = agent.stoppingDistance+2;
     }
 
     virtual public void StarAnimSettings()

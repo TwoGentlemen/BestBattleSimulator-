@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class SimpleControlerAnim : MonoBehaviour
 {
     private AllMobs mobs;

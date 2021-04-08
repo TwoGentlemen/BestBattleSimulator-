@@ -9,12 +9,12 @@ public class NodeBuild : MonoBehaviour
 
     [HideInInspector] public GameObject objectInNode = null;
 
-    private Renderer renderer = null;
+    private Renderer redMaterial = null;
     
 
     private void Start()
     {
-        renderer = GetComponent<Renderer>();
+        redMaterial = GetComponent<Renderer>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,7 +22,7 @@ public class NodeBuild : MonoBehaviour
         if (!other.CompareTag(SpawnManager.instance.tagSpawn))
         {
             SpawnManager.instance.isOn = false;
-            renderer.material.color = NoBuild;
+            redMaterial.material.color = NoBuild;
         }
 
         if (other.CompareTag(GameManager.instance.currentTeam))
@@ -40,7 +40,7 @@ public class NodeBuild : MonoBehaviour
         if (!other.CompareTag(SpawnManager.instance.tagSpawn))
         {
             SpawnManager.instance.isOn = true;
-            renderer.material.color = YesBuild;
+            redMaterial.material.color = YesBuild;
         }
         objectInNode = null;
     }
