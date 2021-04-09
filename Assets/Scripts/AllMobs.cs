@@ -33,7 +33,7 @@ public class AllMobs : MonoBehaviour
     protected Transform target = null;
     private GameObject[] targets = null;
 
-    private NavMeshAgent agent = null;
+    protected NavMeshAgent agent = null;
 
   
     private void AddComponent()
@@ -54,6 +54,7 @@ public class AllMobs : MonoBehaviour
         StarAnimSettings();
         
         tag = GameManager.instance.SetTagForMob((int)team); //Устанавливаем тэг мобу в зависимости от того за кого он играет
+        gameObject.layer = 2;
         GameManager.instance.startGameFite+= StartGame; //Подписываемся на событие начала боя
         SpawnManager.instance.isOn = true;
 
@@ -126,7 +127,7 @@ public class AllMobs : MonoBehaviour
     {
         if(target == null || agent == null) { Debug.LogError("No target or agent!!!"); return;}
 
-        if (agent.remainingDistance <= rangeAttack && agent.remainingDistance > 0)
+        if (Vector3.Distance(target.position,transform.position) <= rangeAttack)
         {
             animator.SetBool("attack", true);
             animator.SetBool("walk", false);
