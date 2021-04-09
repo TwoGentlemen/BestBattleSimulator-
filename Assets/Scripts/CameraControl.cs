@@ -27,14 +27,13 @@ public class CameraControl : MonoBehaviour
 
     void Update()
     {
-        if(gameObject.transform.parent != null) { return;}
-
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPause = !isPause;
-            if (isPause) { 
-            Cursor.lockState = CursorLockMode.Locked; 
-            Cursor.visible = false;
+            if (isPause)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
             }
             else
@@ -42,8 +41,12 @@ public class CameraControl : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
-            
+
         }
+
+        if (gameObject.transform.parent != null) { return;}
+
+      
 
 
 
