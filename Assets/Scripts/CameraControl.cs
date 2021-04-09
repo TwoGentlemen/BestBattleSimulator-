@@ -23,13 +23,6 @@ public class CameraControl : MonoBehaviour
     public float maxMoveZ = 80;
     public float minMoveZ = -10;
 
-    private bool isPause = false;
-
-    private void Start()
-    {
-      
-    }
-
     void Update()
     {
        

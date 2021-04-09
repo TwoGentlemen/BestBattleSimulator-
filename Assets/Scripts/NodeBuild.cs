@@ -19,13 +19,13 @@ public class NodeBuild : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag(SpawnManager.instance.tagSpawn))
+        if (!other.CompareTag(SpawnManager.instance.tagSpawnBlue) || !other.CompareTag(SpawnManager.instance.tagSpawnRed))
         {
             SpawnManager.instance.isOn = false;
             redMaterial.material.color = NoBuild;
         }
 
-        if (other.CompareTag(GameManager.instance.currentTeam))
+        if (other.CompareTag(GameManager.instance.currentTeam) || other.CompareTag("Red"))
         {
             objectInNode = other.gameObject;
         }
@@ -37,7 +37,7 @@ public class NodeBuild : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag(SpawnManager.instance.tagSpawn))
+        if (!other.CompareTag(SpawnManager.instance.tagSpawnBlue) || !other.CompareTag(SpawnManager.instance.tagSpawnRed))
         {
             SpawnManager.instance.isOn = true;
             redMaterial.material.color = YesBuild;

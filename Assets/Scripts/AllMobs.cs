@@ -17,7 +17,7 @@ public class AllMobs : MonoBehaviour
 
     [Space(5)]
     [Header("General characteristics")]
-    [SerializeField] Team team = Team.Blue;
+    [SerializeField] private Team team = Team.Blue;
     [SerializeField] int hp = 10;
 
     [Space(5)]
@@ -60,7 +60,20 @@ public class AllMobs : MonoBehaviour
 
         rangeAttack = agent.stoppingDistance+2;
     }
-
+    public void SetMaterial(bool isBlue)
+    {
+        if (isBlue)
+        {
+            team = Team.Blue;
+            GetComponentInChildren<Renderer>().material.color = Color.blue;
+        }
+        else
+        {
+            team = Team.Red;
+            GetComponentInChildren<Renderer>().material.color = Color.red;
+        }
+        
+    }
     virtual public void StarAnimSettings()
     {
         animator.enabled = false; //бпелеммн!!!

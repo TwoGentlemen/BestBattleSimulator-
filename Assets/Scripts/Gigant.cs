@@ -81,6 +81,7 @@ public class Gigant : AllMobs
 
         var moveY = Input.GetAxis("Mouse Y");
         var moveX = Input.GetAxis("Mouse X");
+        var scroll = Input.GetAxisRaw("Mouse ScrollWheel");
 
         mainCamera.transform.parent = cameraPoint.transform;
 
@@ -105,11 +106,12 @@ public class Gigant : AllMobs
 
     public override void Death()
     {
+        if (isPlayerControl) { 
         mainCamera.transform.parent = null;
 
         mainCamera.position = startPosCamera;
         mainCamera.rotation = startRotCamera;
-
+        }
         base.Death();
     }
 }

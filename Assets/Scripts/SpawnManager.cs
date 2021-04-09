@@ -8,7 +8,8 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager instance = null;
 
     public bool isOn = false;
-    [SerializeField] public string tagSpawn {get;private set; } = "Ground"; //Тэг поверхности на которой можем ставить мобов
+    [SerializeField] public string tagSpawnBlue {get;private set; } = "GroundBlue"; //Тэг поверхности на которой можем ставить мобов
+    [SerializeField] public string tagSpawnRed {get;private set; } = "GroundRed"; //Тэг поверхности на которой можем ставить мобов
     [SerializeField] private GameObject objectNode;
     [SerializeField] private float shift = 0.01f;
     [SerializeField] private Units[] spawnMob;
@@ -43,14 +44,15 @@ public class SpawnManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.instance.isPlay) { return;}
-        if (EventSystem.current.IsPointerOverGameObject()) { objectNode.SetActive(false); return;}
+        if (EventSystem.current.IsPointerOverGameObject()) {objectNode.SetActive(false); return;}
 
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if(Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag(tagSpawn)) 
+            
+            if (hit.collider.CompareTag(tagSpawnBlue) || hit.collider.CompareTag(tagSpawnRed)) 
             {
                 
                 curPos = hit.point+hit.normal*shift;
@@ -66,15 +68,37 @@ public class SpawnManager : MonoBehaviour
         }
         else
         {
+           
             objectNode.SetActive(false);
         }
 
         if (Input.GetMouseButtonDown(0) && isOn && isSelectedMob)
         {
-            if (PlayerStats.instance.Buy(spawnMob[indexCurrentMob].Price))
+            //Спавн моба
+            
+            if (hit.collider.CompareTag(tagSpawnRed))
             {
-                Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.identity);
+                if (PlayerStats.instance.Buy(spawnMob[indexCurrentMob].Price, false))
+                {
+                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.identity);
+                    var c = m.gameObject.GetComponent<AllMobs>();
+                    if (c == null) { Debug.LogError("Error");}
+                    c.SetMaterial(false);
+                   
+                }
             }
+            else
+            {
+                if (PlayerStats.instance.Buy(spawnMob[indexCurrentMob].Price, true))
+                {
+                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.identity);
+                    var c = m.gameObject.GetComponent<AllMobs>();
+                    if (c == null) { Debug.LogError("Error"); }
+                    c.SetMaterial(true);
+                    
+                }
+            }
+           
 
         }
 
@@ -87,7 +111,15 @@ public class SpawnManager : MonoBehaviour
                 var mob = node.objectInNode.GetComponent<AllMobs>();
                 if (mob == null) { Debug.LogError("SpawnManager: Not completed mob!!!"); return;}
 
-                PlayerStats.instance.Sell(mob.unit.Price);
+                if (hit.collider.CompareTag(tagSpawnRed))
+                {
+                    PlayerStats.instance.Sell(mob.unit.Price,false);
+                }
+                else
+                {
+                    PlayerStats.instance.Sell(mob.unit.Price, true);
+                }
+                
                 node.objectInNode.transform.position = new Vector3(-1000,-1000,-1000);
                 Destroy(node.objectInNode,0.1f);
                 
