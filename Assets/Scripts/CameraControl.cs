@@ -23,11 +23,11 @@ public class CameraControl : MonoBehaviour
     public float maxMoveZ = 80;
     public float minMoveZ = -10;
 
-    private bool isPause = true;
+    private bool isPause = false;
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+      
     }
 
     void Update()
@@ -35,10 +35,7 @@ public class CameraControl : MonoBehaviour
        
 
         if (gameObject.transform.parent != null) { return;}
-
-      
-
-
+ 
 
         if (Input.GetKey(KeyCode.W) || (Input.mousePosition.y >= Screen.height - board && isMoveMouse))
         {

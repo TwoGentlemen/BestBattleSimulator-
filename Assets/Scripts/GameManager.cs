@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject panelGameOver;
     [SerializeField] private GameObject panelGameWin;
 
+    private bool isPause = false;
+
 
     public delegate void StartGameDelegate();
     public event StartGameDelegate startGameFite;
@@ -38,7 +40,24 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPause)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            isPause = !isPause;
+        }
+    }
     public string SetTagForMob(int numTeam) //Выдаем тэг мобу в зависимости от того какую он выбрал команду
     {
         var tag = "";
