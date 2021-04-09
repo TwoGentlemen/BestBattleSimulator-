@@ -32,6 +32,16 @@ public class CameraControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             isPause = !isPause;
+            if (isPause) { 
+            Cursor.lockState = CursorLockMode.Locked; 
+            Cursor.visible = false;
+
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
             
         }
 
