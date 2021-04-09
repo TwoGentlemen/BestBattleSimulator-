@@ -25,24 +25,14 @@ public class CameraControl : MonoBehaviour
 
     private bool isPause = true;
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isPause = !isPause;
-            if (isPause)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-            }
-
-        }
+       
 
         if (gameObject.transform.parent != null) { return;}
 
