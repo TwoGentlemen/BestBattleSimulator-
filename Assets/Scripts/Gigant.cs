@@ -84,8 +84,8 @@ public class Gigant : AllMobs
 
         mainCamera.transform.parent = cameraPoint.transform;
 
-        transform.Rotate(0,moveX*Time.deltaTime*60,0);
-        cameraPoint.Rotate(moveY * Time.deltaTime * 60,0,0);
+        transform.Rotate(0,moveX*Time.deltaTime*100,0);
+        cameraPoint.Rotate(moveY * Time.deltaTime * 100,0,0);
         mainCamera.transform.rotation = cameraPoint.rotation;
         mainCamera.transform.position = cameraPoint.transform.position-cameraPoint.forward*30;
 
