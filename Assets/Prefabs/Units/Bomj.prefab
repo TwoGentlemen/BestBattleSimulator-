@@ -76,7 +76,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3
-  m_Acceleration: 12
+  m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 4
@@ -99,13 +99,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1313e83b772c1445b2b65e71f077b8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 10
   unit: {fileID: 11400000, guid: e04612dd9edb6dd4ebe7c002b82ca504, type: 2}
   team: 0
-  hp: 10
   forceDamage: 1
-  rangeAttack: 5.2
+  rangeAttack: 3
   timeReload: 1
-  animator: {fileID: 3145233509344151048}
 --- !u!65 &3145233508342573598
 BoxCollider:
   m_ObjectHideFlags: 0

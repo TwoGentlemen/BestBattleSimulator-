@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(BoxCollider))]
-public class AllMobs : MonoBehaviour
+public class AllMobs : MyHP
 {
     enum Team
     {
@@ -18,7 +18,6 @@ public class AllMobs : MonoBehaviour
     [Space(5)]
     [Header("General characteristics")]
     [SerializeField] private Team team = Team.Blue;
-    [SerializeField] int hp = 10;
 
     [Space(5)]
     [Header("Combat characteristecs")]
@@ -85,6 +84,10 @@ public class AllMobs : MonoBehaviour
         InvokeRepeating("SearchTarget",0,0.5f);
 
         animator.enabled = true;
+        if (target != null)
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     private void Update()
@@ -95,16 +98,11 @@ public class AllMobs : MonoBehaviour
         
     }
 
-    virtual public void Death() //Поведение при смерти моба
+    override public void Death() //Поведение при смерти моба
     {
         Destroy(gameObject);
     }
 
-    public void Damage(int damage) //Метод отвечающий за получение урона от других мобов
-    {
-        hp-=damage;
-        if (hp <= 0) { Death();}
-    }
 
     virtual public void SearchTarget()
     {
@@ -131,7 +129,7 @@ public class AllMobs : MonoBehaviour
     virtual public void Attack()
     {
         if(target == null) {  return; }
-        var buf = target.GetComponent<AllMobs>();
+        var buf = target.GetComponent<MyHP>();
         if(buf == null) { Debug.LogError("Not AllMobs on taget obj!!!"); return;}
         buf.Damage(forceDamage);
     }
@@ -144,10 +142,12 @@ public class AllMobs : MonoBehaviour
         {
             animator.SetBool("attack", true);
             animator.SetBool("walk", false);
+            agent.isStopped = true;
         }
         else
         {
             //move
+            agent.isStopped = false;
             animator.SetBool("attack", false);
             animator.SetBool("walk", true);
             agent.SetDestination(target.position);
