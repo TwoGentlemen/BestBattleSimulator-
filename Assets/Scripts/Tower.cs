@@ -47,7 +47,8 @@ public class Tower : MyHP
         }
         foreach (var rb in rigidbodies)
         {
-            rb.AddForce(Vector3.up*forceImpulse,ForceMode.Impulse);
+           // rb.AddForce(Vector3.up*forceImpulse,ForceMode.Impulse);
+           rb.AddExplosionForce(forceImpulse, transform.position,20);
 
         }
 
@@ -55,5 +56,11 @@ public class Tower : MyHP
         transform.GetChild(0).parent = null;
         Destroy(gameObject);
             }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position,2f);
     }
 }
