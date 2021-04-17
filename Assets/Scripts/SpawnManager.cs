@@ -80,7 +80,7 @@ public class SpawnManager : MonoBehaviour
             {
                 if (PlayerStats.instance.Buy(spawnMob[indexCurrentMob].Price, false))
                 {
-                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.identity);
+                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.Euler(0, -90, 0));
                     var c = m.gameObject.GetComponent<AllMobs>();
                     if (c == null) { Debug.LogError("Error");}
                     c.SetMaterial(false);
@@ -91,7 +91,7 @@ public class SpawnManager : MonoBehaviour
             {
                 if (PlayerStats.instance.Buy(spawnMob[indexCurrentMob].Price, true))
                 {
-                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.identity);
+                    var m = Instantiate(spawnMob[indexCurrentMob].mob, objectNode.transform.position, Quaternion.Euler(0,90,0));
                     var c = m.gameObject.GetComponent<AllMobs>();
                     if (c == null) { Debug.LogError("Error"); }
                     c.SetMaterial(true);
@@ -127,6 +127,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    
     public void SetObjects(int i)
     {
         if(spawnMob.Length <= 0 || i> spawnMob.Length || i<0) { isSelectedMob = false; return;}

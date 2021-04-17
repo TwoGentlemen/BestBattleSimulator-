@@ -2415,7 +2415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: Best Battle Simulator
   textMainHeader: {fileID: 1863117071}
-  allTimePrint: 5
+  allTimePrint: 3
   animator: {fileID: 991982296}
   panelCompany: {fileID: 162405633}
   panelMenu: {fileID: 2026119494}

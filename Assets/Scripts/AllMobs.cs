@@ -55,6 +55,7 @@ public class AllMobs : MyHP
         tag = GameManager.instance.SetTagForMob((int)team); //Устанавливаем тэг мобу в зависимости от того за кого он играет
         gameObject.layer = 2;
         GameManager.instance.startGameFite+= StartGame; //Подписываемся на событие начала боя
+        GameManager.instance.gameOver+=GameOver; //Подписываемся на событие конца боя
         SpawnManager.instance.isOn = true;
 
         rangeAttack = agent.stoppingDistance+2;
@@ -78,6 +79,12 @@ public class AllMobs : MyHP
         animator.enabled = false; //ВРЕМЕННО!!!
     }
 
+    virtual public void GameOver()//Метод срабатывания при окончании игры
+    {
+        animator.enabled = false;
+        agent.enabled = false;
+        
+    }
     virtual public void StartGame() //Метод срабатывает при начале битвы
     {
         SetTargets();
@@ -106,7 +113,7 @@ public class AllMobs : MyHP
 
     virtual public void SearchTarget()
     {
-        if(targets == null) { return; }
+        if(targets == null || !GameManager.instance.isPlay) { return; }
 
         float minDistance = Mathf.Infinity;
 
@@ -129,6 +136,8 @@ public class AllMobs : MyHP
     virtual public void Attack()
     {
         if(target == null) {  return; }
+        if(Vector3.Distance(target.position,transform.position) > rangeAttack) {  return; }
+
         var buf = target.GetComponent<MyHP>();
         if(buf == null) { Debug.LogError("Not AllMobs on taget obj!!!"); return;}
         buf.Damage(forceDamage);
@@ -177,5 +186,6 @@ public class AllMobs : MyHP
     private void OnDestroy()
     {
         GameManager.instance.startGameFite -= StartGame;
+        GameManager.instance.gameOver-= GameOver;
     }
 }
