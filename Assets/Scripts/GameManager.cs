@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public delegate void StartGameDelegate();
     public event StartGameDelegate startGameFite;
+    public event StartGameDelegate gameOver;
 
 
     public GameObject[] teamBlue {get; private set;} = null;
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
         isPlay = false;
         Debug.Log("------Game over. Win " +tagWinners);
 
-        Time.timeScale = 0;
+      //  Time.timeScale = 0;
         if(tagWinners == tagTeamOne)
         {
             panelGameWin.SetActive(true);
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
             panelGameOver.SetActive(true);
         }
         
+        gameOver();
     }
 
 }
